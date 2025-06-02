@@ -1,7 +1,7 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from Userinfo import Hash_Data
+from DataBase.Userinfo import Hash_Data
 from models.City import CityNode
 from Data_structure.strucure import Array
 from models.Plate import PlateNode
@@ -17,7 +17,6 @@ with open('FinalProject/TestFile/cars.txt','r') as ca:
           CarID,c,d,PlateNumber,d,National =line.rstrip().split(' | ')
           # print(Hash_Data.search(int(National)))
 
-
           for i in range(len(City_Array)):
                if City_Array[i].Citycode == PlateNumber.split('-')[1]:
                     result = PlateNumber.split('-')[0]
@@ -29,6 +28,5 @@ with open('FinalProject/TestFile/cars.txt','r') as ca:
                     City_Array[i].PBST.insert(new_node)
                     Hash_Data.search(int(National)).Linklist_Plate.insert(new_node)
 
-for i in range(len(Hash_Data)):
-     if Hash_Data[i] != None:
-          print(Hash_Data[i])
+# for i in range(len(City_Array)):
+#      print(City_Array[i].PBST)

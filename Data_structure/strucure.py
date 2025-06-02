@@ -93,8 +93,7 @@ class DllNode:
         self.data = data 
         self.next = None 
         self.prev = None 
-    def __repr__(self):
-        return 
+
 
 class Linklist:
     def __init__(self):
@@ -274,9 +273,7 @@ class BaseNode:
         self.left = None
         self.right = None 
         self.Parent = None
-        
-
-
+    
 
 
 
