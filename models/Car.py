@@ -7,11 +7,11 @@ class CarNode(BaseNode):
     def __init__(self,serial,name,date,plate,color,NationalCode):
         super().__init__(int(serial))
         self.name = name 
-        self.date = date 
+        self.Date = date 
         self.serial = int(serial)
         self.plate = plate 
         self.color = color 
         self.National = NationalCode
 
     def __repr__(self):
-        return f"{self.serial} | {self.name} | {self.plate} | {self.National}"
+        return f"{self.serial} | {self.name} | {self.plate} | {self.National} | {self.color} | {self.Date}"

@@ -186,6 +186,7 @@ class BST:
                 self.recureseive_insert(root.right,Node)
 
     def search(self,key):
+        key = int(key)
         return self.recureseive_search(self.root,key)
 
     def recureseive_search(self,root,key):
@@ -254,18 +255,18 @@ class BST:
         if node:
               return self.Delelte_Node(node)
         
-    def in_order(self, root):
-        result = ''
-        if root is not None:
-            result += self.in_order(root.left)
-            if hasattr(root, 'color') and root.color:
-                result += f"{root.serial} | {root.name} | {root.plate} |  {root.National} | {root.color}\n"
-            else:
-                result += f"{root.serial} | {root.name} | {root.plate} |  {root.National}\n"
-            result += self.in_order(root.right)
-        return result
-    def __repr__(self):
-        return str(self.in_order(self.root))
+    # def in_order(self, root):
+    #     result = ''
+    #     if root is not None:
+    #         result += self.in_order(root.left)
+    #         if hasattr(root, 'color') and root.color:
+    #             result += f"{root.serial} | {root.name} | {root.plate} |  {root.National} | {root.color} | {root.Date} \n"
+    #         else:
+    #             result += f"{root.serial} | {root.Cityname} | {root.plate} |  {root.National}\n"
+    #         result += self.in_order(root.right)
+    #     return result
+    # def __repr__(self):
+    #     return str(self.in_order(self.root))
 
 class BaseNode:
     def __init__(self,key):

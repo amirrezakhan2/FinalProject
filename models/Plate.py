@@ -5,15 +5,17 @@ import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 from Data_structure.strucure import BaseNode,Array
 class PlateNode(BaseNode):
-    def __init__(self,name,National,Plate,key,serial = None):
+    def __init__(self,Cityname ,National,Plate,key,serial = None):
         super().__init__(int(key))
-        self.name = name
+        self.Cityname = Cityname
         self.National = National
         self.plate = Plate
         self.serial = serial
+        self.StarDate = None
+        self.EndDate = None
         self.Status = False
     def __repr__(self):
-        return f"{self.serial} | {self.name} | {self.plate} |  {self.National}"
+        return f"{self.Cityname} | {self.plate} |  {self.National} "
 
 
 class MakePlate:

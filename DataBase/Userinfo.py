@@ -9,7 +9,5 @@ with open('FinalProject/TestFile/users.txt','r') as info:
         national,name,lname,date,password = line.rstrip().split(' | ')
         new_User =User(national,name,lname,date,password)
         Hash_Data.insert(new_User.National,new_User)
-# for i in range(len(Hash_Data)):
-#     if Hash_Data[i] != None:
-#         print(Hash_Data[i])
+
 

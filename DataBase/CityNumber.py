@@ -23,10 +23,9 @@ with open('FinalProject/TestFile/cars.txt','r') as ca:
                     a = result[0:2]
                     b = result [3:6]
                     result = a + str(ord(result[3])) + b 
-                    new_node = PlateNode(City_Array[i].CityName,National,PlateNumber,int(result))
-                    new_node.serial = CarID
+                    new_node = PlateNode(City_Array[i].CityName,National,PlateNumber,int(result),CarID)
                     City_Array[i].PBST.insert(new_node)
                     Hash_Data.search(int(National)).Linklist_Plate.insert(new_node)
 
-# for i in range(len(City_Array)):
-#      print(City_Array[i].PBST)
+
+

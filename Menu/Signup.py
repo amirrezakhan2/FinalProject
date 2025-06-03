@@ -1,8 +1,9 @@
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from DataBase.Userinfo import Hash_Data
+from DataBase.CityNumber import Hash_Data
 from models.User import User
+from datetime import datetime
 
 def check_National(code):
     code = str(code)
@@ -26,28 +27,31 @@ def check_Password(Pword):
           return True
     else:
         return False
-def UserPanel():
+def check_Birthday(Birthday):
+    try:
+        datetime.strptime(Birthday, "%Y/%m/%d") 
+        return True
+    except ValueError:
+        return False
+    
+def SignUp():
     National_code =  int(input('Enter your National Code:\n'))
     if check_National(National_code) == True:
-        Search_Natinoal = Hash_Data.search(National_code)
-        if Search_Natinoal:
-            Pword = input('Enter your Password:\n')
-            if Search_Natinoal.Password == Pword:
-                print(f'{Search_Natinoal.Name} welcome Back ' )
-            else:
-                 return False,print('Your Password is wrong')
-        else:
             Password_User = input('Enter your Password,Password must have digit and alphabetic and len must be 8:\n')
             if check_Password(Password_User) == True:
                 name = input('Enter your name:\n')
                 Lname = input('Enter your Lastname:\n')
                 Birthday = input('Enter your Birthday:Plese Enter in ZZZZ-XX-HH format\n')
-                new_User = User(National_code,name,Lname,Birthday,Password_User)
-                Hash_Data.insert(new_User.National,new_User)
-                return True,new_User
+                if check_Birthday(Birthday) == True:
+                    new_User = User(National_code,name,Lname,Birthday,Password_User)
+                    Hash_Data.insert(new_User.National,new_User)
+                    return True,new_User
+                else:
+                    return False,print('you do not enter have corroect Format Birthday ')
+            else:
+                return False,print('You do not enter have corroct Format Password')
     else:
         return False,print('Your National code have Problem Please check it')
-
 
 
         
