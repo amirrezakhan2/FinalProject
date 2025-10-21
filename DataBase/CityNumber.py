@@ -15,17 +15,33 @@ with open('FinalProject/TestFile/citycode.txt','r') as Code:
 with open('FinalProject/TestFile/cars.txt','r') as ca:
      for line in ca:
           CarID,c,d,PlateNumber,d,National =line.rstrip().split(' | ')
-          # print(Hash_Data.search(int(National)))
-
           for i in range(len(City_Array)):
                if City_Array[i].Citycode == PlateNumber.split('-')[1]:
                     result = PlateNumber.split('-')[0]
-                    a = result[0:2]
-                    b = result [3:6]
-                    result = a + str(ord(result[3])) + b 
-                    new_node = PlateNode(City_Array[i].CityName,National,PlateNumber,int(result),CarID)
+                    result = result[0:2] + str(ord(result[2])) + result [3:]
+                    new_node = PlateNode(City_Array[i].CityName,National,PlateNumber,result,CarID)
+                    if CarID:
+                         new_node.Status = True
                     City_Array[i].PBST.insert(new_node)
                     Hash_Data.search(int(National)).Linklist_Plate.insert(new_node)
+# with open('FinalProject/TestFile/Plate.txt','r') as file:
+#      for line in file:
+#           Plate,Start,CarID,National = line.split(' | ')
+#           key,citycode = Plate.split('-')
+#           key = key[0:2] + str(ord(key[2])) + key[3:]
+#           for i in range(len(City_Array)):
+#                if City_Array[i].Citycode == citycode:
+#                     info = City_Array[i].PBST.search(key)
+#                     if info:
+#                          info.StartDate = Start
+#                     else:
+#                          new_node = PlateNode(City_Array[i].CityName,National,PlateNumber,key,CarID)
+#                          City_Array[i].PBST.insert(new_node)
+#                          Hash_Data.search(int(National)).Linklist_Plate.insert(new_node)
+
+                         
+
+
 
 
 
