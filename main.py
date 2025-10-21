@@ -7,6 +7,7 @@ from Menu.ManagerPanel import Car_registration,SeeALLCar,SeeALLUser,SeeALLCityPl
 from Menu.UserPanel import User_Seenegative
 from Menu.UserPanel import SeeFine,SeeFinePLate
 from Menu.UserPanel import History
+from Menu.ManagerPanel import SeeFine
 
 status = False
 
@@ -52,7 +53,8 @@ while True:
                 print('{15}.........BlackingDriver.........')
                 print('{16}.........GiveDrvinglicense.........')
                 print('{17}.........MakeFine.........')
-                print('{18}.........Back to main menu.........')
+                print('{18}.........SeeFine.........')
+                print('{19}.........Back to main menu.........')
 
                 Manger_chioce = input('What do you want sir:\n')
 
@@ -109,6 +111,8 @@ while True:
                 elif Manger_chioce == '17':
                     MakeFine()
                 elif Manger_chioce == '18':
+                    SeeFine()
+                elif Manger_chioce == '19':
                     break 
 
                 else:
