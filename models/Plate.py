@@ -3,7 +3,8 @@ import string
 import sys
 import os
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-from Data_structure.strucure import BaseNode,Array
+from Data_structure.strucure import BaseNode,Array,DynamicArray
+from DataBase.CarData import CarBST
 class PlateNode(BaseNode):
     def __init__(self,Cityname ,National,Plate,key,serial = None):
         super().__init__(int(key))
@@ -11,11 +12,16 @@ class PlateNode(BaseNode):
         self.National = National
         self.plate = Plate
         self.serial = serial
-        self.StarDate = None
-        self.EndDate = None
         self.Status = False
+        self.StartDate = None
+        self.Finehistory = DynamicArray()
+        self.CarHistory = DynamicArray()
     def __repr__(self):
-        return f"{self.Cityname} | {self.plate} |  {self.National} "
+        if self.serial == None or self.serial == 'None':
+            return f"{self.serial} | {self.plate} |  activite = {self.Status}"
+        else:
+            return f"{CarBST.search(self.serial)} | {self.plate} |  activite = {self.Status}"
+            
 
 
 class MakePlate:
