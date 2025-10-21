@@ -34,6 +34,7 @@ class Hash:
         self.loadfactor = 0.7
         self.useful = 0
         self.size = 10
+        self.DELETED = "DELETED"
 
     def hashfunction(self, key):
         return int(key) % self.size
@@ -41,10 +42,12 @@ class Hash:
     def insert(self, key, Node):
         key = int(key)
         index = self.hashfunction(key)
-        status = self.search(key)
-        if status == False:
-            if self.HashTable[index] is not None:
-                index = self.LinerProbing(index)
+        if self.search(key) is False:
+            original_index = index
+            while self.HashTable[index] is not None and self.HashTable[index] != self.DELETED:
+                index = (index + 1) % self.size
+                if index == original_index:
+                    raise Exception("HashTable is full")
             self.HashTable[index] = Node
             self.useful += 1
             if self.useful / self.size >= self.loadfactor:
@@ -52,19 +55,30 @@ class Hash:
         else:
             return False
 
-    def LinerProbing(self, index):
-        while self.HashTable[index] is not None:
-            index = (index + 1) % self.size
-            if index == self.size:
-                raise Exception('HashTable is full')
-        return index
-
     def search(self, key):
+        key = int(key)
         index = self.hashfunction(key)
+        original_index = index
         while self.HashTable[index] is not None:
-            if self.HashTable[index].National == key: 
+            if self.HashTable[index] != self.DELETED and self.HashTable[index].key == key:
                 return self.HashTable[index]
             index = (index + 1) % self.size
+            if index == original_index:
+                break
+        return False
+
+    def delete(self, key):
+        key = int(key)
+        index = self.hashfunction(key)
+        original_index = index
+        while self.HashTable[index] is not None:
+            if self.HashTable[index] != self.DELETED and self.HashTable[index].key == key:
+                self.HashTable[index] = self.DELETED
+                self.useful -= 1
+                return True
+            index = (index + 1) % self.size
+            if index == original_index:
+                break
         return False
 
     def incerase_hash(self):
@@ -73,9 +87,17 @@ class Hash:
         self.HashTable = [None] * self.size
         self.useful = 0
         for node in old_hash_table:
-            if node is not None:
-                key = node.National
+            if node is not None and node != self.DELETED:
+                key = node.key
                 self.insert(key, node)
+    def change_key(self, old_key, new_key):
+        node = self.search(old_key)
+        if not node:
+            return False  
+        self.delete(old_key)
+        node.key = int(new_key)
+        self.insert(new_key, node)
+        return True
 
     def __getitem__(self, index):
         if index > self.size - 1:
@@ -84,9 +106,9 @@ class Hash:
 
     def __repr__(self):
         return str(self.HashTable)
+
     def __len__(self):
         return self.size
-    
 
 class DllNode:
     def __init__(self,data):
@@ -100,7 +122,7 @@ class Linklist:
         self.head = None
         self.tail = None
         self.count = 0
-    def insert(self,data): # insert to first 
+    def insert(self,data): 
         new_node = DllNode(data)
         if self.head == None :
             self.head = new_node
@@ -243,7 +265,7 @@ class BST:
             substitute = self.find_min(node.right)
             node.serial = substitute.serial
             node.name = substitute.name
-            node.date = substitute.date
+            node.date = substitute.Date
             node.plate = substitute.plate
             node.color = substitute.color
             node.National = substitute.National
@@ -251,22 +273,26 @@ class BST:
             self.Delelte_Node(substitute)
 
     def Delete(self,key):
+
         node = self.recureseive_search(self.root,key)
         if node:
               return self.Delelte_Node(node)
+    
         
-    # def in_order(self, root):
-    #     result = ''
-    #     if root is not None:
-    #         result += self.in_order(root.left)
-    #         if hasattr(root, 'color') and root.color:
-    #             result += f"{root.serial} | {root.name} | {root.plate} |  {root.National} | {root.color} | {root.Date} \n"
-    #         else:
-    #             result += f"{root.serial} | {root.Cityname} | {root.plate} |  {root.National}\n"
-    #         result += self.in_order(root.right)
-    #     return result
-    # def __repr__(self):
-    #     return str(self.in_order(self.root))
+        
+    def in_order(self, root):
+        result = ''
+        if root is not None:
+            result += self.in_order(root.left)
+            if hasattr(root, 'color') and root.color:
+                result += f"{root.serial} | {root.name} | {root.plate} |  {root.National} | {root.color} | {root.Date} \n"
+            else:
+                result += f"{root.serial} | {root.Cityname} | {root.plate} |  {root.National} |  activite = {root.Status}\n"
+            result += self.in_order(root.right)
+        return result
+
+    def __repr__(self):
+        return str(self.in_order(self.root))
 
 class BaseNode:
     def __init__(self,key):
@@ -277,12 +303,44 @@ class BaseNode:
     
 
 
+class DynamicArray:
+    def __init__(self):
+        self.size = 10
+        self.array = [None] * self.size 
+        self.useful = 0 
+    def insert(self,value):
+        if self.useful == self.size :
+            self.increasearray()
+        self.array[self.useful] = value
+        self.useful += 1
+    def increasearray(self):
+        old_array = self.array
+        self.size = self.size * 2
+        self.array = [None] * self.size 
+        for i in range(len(old_array)):
+            self.array[i] = old_array[i]
+    def __len__(self):
+        return self.useful
+    
+    def __getitem__(self,index):
+        return self.array[index]
+    
+    def __repr__(self):
+        return str(self.array[:self.useful])
+    def __setitem__(self, index, value):
+        if 0 <= index < self.useful:
+            self.array[index] = value
+        else:
+            raise IndexError("Index out of range")
+    def restartArray(self):
+        self.size = 10
+        self.array = [None] * self.size 
+        self.useful = 0 
 
 
-
-
-
-
+        
+          
+            
 
 
 
