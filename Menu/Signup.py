@@ -29,11 +29,16 @@ def check_Password(Pword):
         return False
 def check_Birthday(Birthday):
     try:
-        datetime.strptime(Birthday, "%Y/%m/%d") 
+        datetime.strptime(Birthday, "%Y-%m-%d") 
         return True
     except ValueError:
         return False
-    
+    {Hash_Data[i].Lname}
+def SaveUser():
+    with open('FinalProject/TestFile/users.txt', 'w') as file:
+        for i in range(len(Hash_Data)):
+            if Hash_Data[i] != None:
+                file.write(f"{Hash_Data[i].National} | {Hash_Data[i].Name} | {Hash_Data[i].Lname} | {Hash_Data[i].Date} | {Hash_Data[i].Password}\n")
 def SignUp():
     National_code =  int(input('Enter your National Code:\n'))
     if check_National(National_code) == True:
@@ -45,6 +50,7 @@ def SignUp():
                 if check_Birthday(Birthday) == True:
                     new_User = User(National_code,name,Lname,Birthday,Password_User)
                     Hash_Data.insert(new_User.National,new_User)
+                    SaveUser()
                     return True,new_User
                 else:
                     return False,print('you do not enter have corroect Format Birthday ')
